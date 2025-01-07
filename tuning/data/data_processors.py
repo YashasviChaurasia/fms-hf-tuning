@@ -283,11 +283,11 @@ class DataPreProcessor:
                     kwargs["fn_kwargs"] = dict(kwargs["fn_kwargs"], **extra_kwargs)
 
                     logger.info("Applying Handler: %s Args: %s", data_handler, kwargs)
-                    # print(raw_dataset[0])
+                    print(raw_dataset[0])
                     print("@"*100)
                     # print(handler)
                     raw_datasets = raw_datasets.map(handler, **kwargs)
-                    # print(raw_dataset[0])
+                    print(raw_dataset[0])
 
             # Append the processed datasets to the final dict
             all_datasetdicts.append(raw_datasets)
