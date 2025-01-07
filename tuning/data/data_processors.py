@@ -285,7 +285,7 @@ class DataPreProcessor:
                     logger.info("Applying Handler: %s Args: %s", data_handler, kwargs)
                     # print(raw_dataset[0])
                     print("@"*100)
-                    print(handler)
+                    # print(handler)
                     raw_datasets = raw_datasets.map(handler, **kwargs)
                     # print(raw_dataset[0])
 
@@ -325,7 +325,8 @@ class DataPreProcessor:
                 )
 
         train_dataset = final_datasets.get("train", None)
-
+        print("#"*100)
+        print(train_dataset[0])
         return train_dataset
 
     def process_dataset_configs(
