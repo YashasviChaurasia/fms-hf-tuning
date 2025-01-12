@@ -284,6 +284,8 @@ class DataPreProcessor:
 
                     logger.info("Applying Handler: %s Args: %s", data_handler, kwargs)
                     print(raw_dataset[0])
+                    print("CHAT_TEMPLATE")
+                    print(kwargs["fn_kwargs"]["tokenizer"].chat_template)
                     print("@"*100)
                     # print(handler)
                     raw_datasets = raw_datasets.map(handler, **kwargs)
