@@ -312,6 +312,7 @@ def train(
         multiple_of=model_args.embedding_size_multiple_of,
     )
     tokentest=set(data_args.add_special_tokens)
+    print(tokentest)
     print(tokentest.issubset(set(tokenizer.vocab)))
     # Configure the collator and validate args related to packing prior to formatting the dataset
     data_collator = None
