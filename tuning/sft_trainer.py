@@ -297,6 +297,10 @@ def train(
                 tokenizer.eos_token = configs.DEFAULT_EOS_TOKEN
                 special_tokens_dict["eos_token"] = configs.DEFAULT_EOS_TOKEN
 
+    if data_args.add_special_tokens:
+        logger.info(f"Adding user-defined special tokens: {data_args.add_special_tokens}")
+        special_tokens_dict["additional_special_tokens"] = data_args.add_special_tokens
+
     # TODO: lower priority but understand if resizing impacts inference quality and why its needed.
     # It makes sense if we manipulate tokenizer that we also save it and provide it to inference.
     added_tokens_dict = tokenizer_and_embedding_resize(

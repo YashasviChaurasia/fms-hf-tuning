@@ -122,6 +122,14 @@ class DataArguments:
             Passed in conjunction with response_template"
         },
     )
+    add_special_tokens: Optional[List[str]] = field(
+        default=None,
+        metadata={
+            "help": "List of special tokens to be added to the tokenizer's vocabulary. \
+            Used to add Special Tokens to Tokenizer's Vocabulary\
+            Passed in conjunction with chat_template"
+        },
+    )
 
 
 @dataclass
