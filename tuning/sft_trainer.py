@@ -296,10 +296,12 @@ def train(
             else:
                 tokenizer.eos_token = configs.DEFAULT_EOS_TOKEN
                 special_tokens_dict["eos_token"] = configs.DEFAULT_EOS_TOKEN
-
+    
     if data_args.add_special_tokens:
         logger.info(f"Adding user-defined special tokens: {data_args.add_special_tokens}")
         special_tokens_dict["additional_special_tokens"] = data_args.add_special_tokens
+    
+    
 
     # TODO: lower priority but understand if resizing impacts inference quality and why its needed.
     # It makes sense if we manipulate tokenizer that we also save it and provide it to inference.
@@ -309,7 +311,8 @@ def train(
         model=model,
         multiple_of=model_args.embedding_size_multiple_of,
     )
-
+    tokentest=set(data_args.add_special_tokens)
+    print(tokentest.issubset(set(tokenizer.vocab)))
     # Configure the collator and validate args related to packing prior to formatting the dataset
     data_collator = None
     logger.info("Packing is set to %s ", train_args.packing)
