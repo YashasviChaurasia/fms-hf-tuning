@@ -30,6 +30,8 @@ from transformers import (
 from transformers.trainer import TRAINING_ARGS_NAME
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 import torch
+import logging
+logger = logging.getLogger(__name__)
 
 # Local
 from .utils import ensure_nested_dataclasses_initialized, parsable_dataclass
@@ -95,7 +97,7 @@ def get_callbacks(**kwargs):
                 Save all HF files and convert dcp checkpoint to safetensors at every save operation.
                 Also saves the final model in save_model_dir if provided.
                 """
-
+                logger.info(">>> FastMoE on_save START <<<")
                 def checkpoint(checkpoint_dir, save_dir):
                     hf_converted_output_dir = os.path.join(
                         save_dir, "hf_converted_checkpoint"
@@ -167,6 +169,7 @@ def get_callbacks(**kwargs):
                         if not os.path.exists(self.save_model_dir):
                             os.mkdir(self.save_model_dir)
                         checkpoint(checkpoint_dir, self.save_model_dir)
+                logger.info(">>> FastMoE on_save END <<<")
 
         callbacks.append(
             ConvertAndSaveHFCheckpointAtEverySave(

@@ -578,6 +578,7 @@ class TrainerControllerCallback(TrainerCallback):
     ):
         # Training arguments, state and controls are folded into kwargs to be passed off to
         # handlers
+        logger.info(">>> TC on_save START <<<")
         kwargs["args"] = args
         kwargs["state"] = state
         kwargs["control"] = control
@@ -586,6 +587,7 @@ class TrainerControllerCallback(TrainerCallback):
         if "is_final" not in kwargs:
             kwargs["is_final"] = False
         self._actions_on_event(event_name="on_save", **kwargs)
+        logger.info(">>> TC on_save END <<<")
 
     def on_step_begin(
         self,
