@@ -597,6 +597,16 @@ class TrainerControllerCallback(TrainerCallback):
             logger.info(f"[TC] Using standard checkpoint path: {base_path}")
 
         logger.info(f"[TC] Logging path={kwargs['path']} to artifact system")
+
+        logger.warning(
+            f"[TC DEBUG] step={state.global_step}/{state.max_steps} | "
+            f"HF state.is_final={state.is_final} | "
+            f"kwargs.is_final={kwargs.get('is_final')} | "
+            f"per_process_state.rank={ps} | "
+            f"path={kwargs['path']} | "
+            f"control.should_save={control.should_save}"
+        )
+
         self._actions_on_event(event_name="on_save", **kwargs)
 
     def on_step_begin(
