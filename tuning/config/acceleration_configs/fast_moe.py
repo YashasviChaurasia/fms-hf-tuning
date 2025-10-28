@@ -30,6 +30,8 @@ from transformers import (
 from transformers.trainer import TRAINING_ARGS_NAME
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 import torch
+import logging
+logger = logging.getLogger(__name__)
 
 # Local
 from .utils import ensure_nested_dataclasses_initialized, parsable_dataclass
@@ -96,7 +98,12 @@ def get_callbacks(**kwargs):
                 Also saves the final model in save_model_dir if provided.
                 """
 
+                logger.info(
+                    f"[MoE] ConvertAndSaveHFCheckpointAtEverySave.on_save "
+                )
+
                 def checkpoint(checkpoint_dir, save_dir):
+                    logger.info(f"[MoE] Converting DCP checkpoint to HF | checkpoint_dir={checkpoint_dir} ")
                     hf_converted_output_dir = os.path.join(
                         save_dir, "hf_converted_checkpoint"
                     )
@@ -167,7 +174,7 @@ def get_callbacks(**kwargs):
                         if not os.path.exists(self.save_model_dir):
                             os.mkdir(self.save_model_dir)
                         checkpoint(checkpoint_dir, self.save_model_dir)
-
+                logger.info(f"[MoE] call END! ")
         callbacks.append(
             ConvertAndSaveHFCheckpointAtEverySave(
                 pretrained_model_name_or_path, trainer, save_model_dir

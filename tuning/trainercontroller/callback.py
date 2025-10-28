@@ -578,6 +578,7 @@ class TrainerControllerCallback(TrainerCallback):
     ):
         # Training arguments, state and controls are folded into kwargs to be passed off to
         # handlers
+        logger.info(f"[TC] on_save triggered | step={state.global_step} | is_final={state.is_final}")
         kwargs["args"] = args
         kwargs["state"] = state
         kwargs["control"] = control
@@ -587,12 +588,16 @@ class TrainerControllerCallback(TrainerCallback):
 
         hf_converted_path = os.path.join(base_path, "hf_converted_checkpoint")
         if os.path.isdir(hf_converted_path):
+            logger.info(f"[TC] HF-converted checkpoint found and selected: {hf_converted_path}")
             kwargs["path"] = hf_converted_path
         else:
+            logger.info(f"[TC] Using standard checkpoint path: {base_path}")
             kwargs["path"] = base_path
 
         if "is_final" not in kwargs:
             kwargs["is_final"] = False
+
+        logger.info(f"[TC] Logging path={kwargs['path']} to artifact system")
         self._actions_on_event(event_name="on_save", **kwargs)
 
     def on_step_begin(
