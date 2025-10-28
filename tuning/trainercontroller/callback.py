@@ -582,20 +582,20 @@ class TrainerControllerCallback(TrainerCallback):
         kwargs["args"] = args
         kwargs["state"] = state
         kwargs["control"] = control
-        base_path = kwargs.get(
-            "path", f"{args.output_dir}/checkpoint-{state.global_step}"
-        )
 
+        if "path" not in kwargs:
+            kwargs["path"] = f"{args.output_dir}/checkpoint-{state.global_step}"
+
+        if "is_final" not in kwargs:
+            kwargs["is_final"] = False
+
+        base_path = kwargs["path"]
         hf_converted_path = os.path.join(base_path, "hf_converted_checkpoint")
         if os.path.isdir(hf_converted_path):
             logger.info(f"[TC] HF-converted checkpoint found and selected: {hf_converted_path}")
             kwargs["path"] = hf_converted_path
         else:
             logger.info(f"[TC] Using standard checkpoint path: {base_path}")
-            kwargs["path"] = base_path
-
-        if "is_final" not in kwargs:
-            kwargs["is_final"] = False
 
         logger.info(f"[TC] Logging path={kwargs['path']} to artifact system")
         self._actions_on_event(event_name="on_save", **kwargs)
