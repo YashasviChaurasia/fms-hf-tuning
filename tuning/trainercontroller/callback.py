@@ -578,7 +578,7 @@ class TrainerControllerCallback(TrainerCallback):
     ):
         # Training arguments, state and controls are folded into kwargs to be passed off to
         # handlers
-        logger.info(f"[TC] on_save triggered | step={state.global_step} | is_final={state.is_final}")
+        logger.info(f"[TC] on_save triggered")
         kwargs["args"] = args
         kwargs["state"] = state
         kwargs["control"] = control
