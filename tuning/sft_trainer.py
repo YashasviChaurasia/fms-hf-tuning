@@ -513,7 +513,7 @@ def train(
         tc_callback = TrainerControllerCallback(
             trainer_controller_args.trainer_controller_config_file,
         )
-        self.control = self.callback_handler.on_init_end(self.args, self.state, self.control)
+        tc_callback.on_init_end(trainer.args, trainer.state, trainer.control)
         trainer.add_callback(tc_callback)
 
     trainer.train(resume_from_checkpoint)
