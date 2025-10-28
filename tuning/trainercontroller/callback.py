@@ -586,8 +586,7 @@ class TrainerControllerCallback(TrainerCallback):
         if "path" not in kwargs:
             kwargs["path"] = f"{args.output_dir}/checkpoint-{state.global_step}"
 
-        if "is_final" not in kwargs:
-            kwargs["is_final"] = False
+        kwargs["is_final"] = state.global_step == state.max_steps
 
         base_path = kwargs["path"]
         hf_converted_path = os.path.join(base_path, "hf_converted_checkpoint")
