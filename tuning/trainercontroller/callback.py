@@ -209,7 +209,7 @@ class TrainerControllerCallback(TrainerCallback):
         """
         logger.info(f"[TC] _take_control_actions")
         if event_name in self.control_actions_on_event:
-            logger.info(f"[TC] _take_control_actions if event_name in self.control_actions_on_event")
+            logger.info(f"[TC] _take_control_actions if {event_name} in {self.control_actions_on_event}")
             evaluator = RuleEvaluator(metrics=self.metrics)
             for control_action in self.control_actions_on_event[event_name]:
                 rule_succeeded = False
