@@ -207,7 +207,9 @@ class TrainerControllerCallback(TrainerCallback):
             event_name: str. Event name.
             kwargs: List of arguments (key, value)-pairs.
         """
+        logger.info(f"[TC] _take_control_actions")
         if event_name in self.control_actions_on_event:
+            logger.info(f"[TC] _take_control_actions if event_name in self.control_actions_on_event")
             evaluator = RuleEvaluator(metrics=self.metrics)
             for control_action in self.control_actions_on_event[event_name]:
                 rule_succeeded = False
@@ -250,8 +252,10 @@ class TrainerControllerCallback(TrainerCallback):
                         control_name=control_action.name,
                     )
                 ):
+                    logger.info(f"[TC] _take_control_actions control_action.patience is not None ")
                     continue
                 if rule_succeeded:
+                    logger.info(f"[TC] _take_control_actions if rule succeeded ")
                     for operation_action in control_action.operation_actions:
                         operation_action.instance.act(
                             action=operation_action.action,
@@ -271,6 +275,7 @@ class TrainerControllerCallback(TrainerCallback):
             event_name: str. Event name.
             kwargs: List of arguments (key, value)-pairs.
         """
+        logger.info(f"[TC] _actions_on_event")
         self._compute_metrics(event_name, **kwargs)
         self._take_control_actions(event_name, **kwargs)
 
